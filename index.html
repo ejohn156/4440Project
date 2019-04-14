@@ -12,7 +12,7 @@
 
 <body>
     <div id="weather">
-            <h3 id="current">Location: {{ currentWeather[0].city_name }}, {{currentWeather[0].country_code}}</h3>
+            <h3 id="current">Location: {{ searchedLocation }}</h3>
             <select v-model="searchType" value="Current" v-on:change="onSearchChange($event)">
                     <br>
                     <option value="Current">Current</option>
@@ -21,15 +21,15 @@
                   <br>
         <div v-if="this.searchType === 'Current'">
         <input v-model="location" placeholder="enter a city">
-    <button v-on:click="getCurrentWeather($event)">Get Current Weather</button>
-    <h3 v-for="weather in currentWeather">Current Weather: {{ currentWeather[0].temp }}</h3>
+    <button v-on:click="changeCity($event)">Get Current Weather</button>
+    <h3  v-for="weather in currentWeather">Current Weather: {{ currentWeather[0].temp }}</h3>
     </div>
     <div v-else-if="this.searchType === 'Forecast'">
     <input v-model="location" placeholder="enter a city">
-    <button v-on:click="getWeatherForecast($event)">Get Current Weather</button>
+    <button v-on:click="changeCity($event)">Get 16 day weather forecast</button>
     <ul>
-        <li v-for="weather in forecastArray">
-            Location: {{ location }}
+        <li v-for="weather in forecastArray" >
+            Location: {{ searchedLocation }}
             Temp: {{weather.temp}}
             Date: {{weather.datetime}}
         </li>
