@@ -2,12 +2,16 @@
 <html lang="en">
 
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>4440 Weather Forecaster</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 </head>
 
 <body>
@@ -20,10 +24,13 @@
                   </select>
                   <br>
         <div v-if="this.searchType === 'Current'">
-        <input v-model="location" placeholder="enter a city">
+        <!-- <input v-model="location" placeholder="enter a city">
     <button v-on:click="changeCity($event)">Get Current Weather</button>
     <h3  v-for="weather in currentWeather">Current Weather: {{ currentWeather[0].temp }}</h3>
-    </div>
+    </div> -->
+    
+            <script type="text/x-template" id="current"></script>
+    
     <div v-else-if="this.searchType === 'Forecast'">
     <input v-model="location" placeholder="enter a city">
     <button v-on:click="changeCity($event)">Get 16 day weather forecast</button>
@@ -37,6 +44,7 @@
 </div>
 </div>
 <script src="VueScripts/weather.js"></script>
+<script src="VueScripts/current.js"></script>
 <!-- <script src="VueScripts/forecastWeather.js"></script> -->
 
 </body>
