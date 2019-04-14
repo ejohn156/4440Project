@@ -29,7 +29,7 @@
     <button v-on:click="getWeatherForecast($event)">Get Current Weather</button>
     <ul>
         <li v-for="weather in forecastArray">
-            Location: {{ location }}
+            Location: {{ forecastLocation }}
             Temp: {{weather.temp}}
             Date: {{weather.datetime}}
         </li>
