@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="Vue.js"></script>
+    <title>4440 Weather Forecaster</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 </head>
+
 <body>
-    <h1>Test</h1>
+    <div id="weather">
+            <h3 id="current">Location: {{ currentWeather[0].city_name }}, {{currentWeather[0].country_code}}</h3>
+            <select v-model="searchType" value="Current" v-on:change="onSearchChange($event)">
+                    <br>
+                    <option value="Current">Current</option>
+                    <option value="Forecast">Forecast</option>
+                  </select>
+                  <br>
+        <div v-if="this.searchType === 'Current'">
+        <input v-model="location" placeholder="enter a city">
+    <button v-on:click="getCurrentWeather($event)">Get Current Weather</button>
+    <h3 v-for="weather in currentWeather">Current Weather: {{ currentWeather[0].temp }}</h3>
+    </div>
+    <div v-else-if="this.searchType === 'Forecast'">
+    <input v-model="location" placeholder="enter a city">
+    <button v-on:click="getWeatherForecast($event)">Get Current Weather</button>
+    <ul>
+        <li v-for="weather in forecastArray">
+            Location: {{ location }}
+            Temp: {{weather.temp}}
+            Date: {{weather.datetime}}
+        </li>
+    </ul>
+</div>
+</div>
+<script src="VueScripts/weather.js"></script>
+<!-- <script src="VueScripts/forecastWeather.js"></script> -->
+
 </body>
+
 </html>
