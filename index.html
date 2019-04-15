@@ -2,42 +2,101 @@
 <html lang="en">
 
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>4440 Weather Forecaster</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <link href="styleSheet.css">
 </head>
 
 <body>
-    <div id="weather">
-            <h3 id="current">Location: {{ searchedLocation }}</h3>
-            <select v-model="searchType" value="Current" v-on:change="onSearchChange($event)">
-                    <br>
+    <v-container id="weather" grid-list-x1>
+        <v-layout row>
+            <v-flex pa-12>
+                <v-card>
+                    <h1 style="text-align: center">{{ searchedLocation }}</h1>
+                </v-card>
+            </v-flex>
+        </v-layout>
+
+        <v-layout row>
+            <v-flex pa-1>
+                <v-card>
+                    <v-select v-model="searchType" value="Current" v-on:change="onSearchChange" :items="searchOptions">
+                        <!-- <br>
                     <option value="Current">Current</option>
-                    <option value="Forecast">Forecast</option>
-                  </select>
-                  <br>
-        <div v-if="this.searchType === 'Current'">
-        <input v-model="location" placeholder="enter a city">
-    <button v-on:click="changeCity($event)">Get Current Weather</button>
-    <h3  v-for="weather in currentWeather">Current Weather: {{ currentWeather[0].temp }}</h3>
-    </div>
-    <div v-else-if="this.searchType === 'Forecast'">
-    <input v-model="location" placeholder="enter a city">
-    <button v-on:click="changeCity($event)">Get 16 day weather forecast</button>
-    <ul>
-        <li v-for="weather in forecastArray" >
-            Location: {{ searchedLocation }}
-            Temp: {{weather.temp}}
-            Date: {{weather.datetime}}
-        </li>
-    </ul>
-</div>
-</div>
-<script src="VueScripts/weather.js"></script>
-<!-- <script src="VueScripts/forecastWeather.js"></script> -->
+                    <option value="Forecast">Forecast</option> -->
+                    </v-select>
+                </v-card>
+            </v-flex>
+            <v-flex pa-1 v-if="this.searchType === 'Current'">
+                <v-card>
+                    <v-layout row>
+                        <v-flex pa-1>
+                            <v-text-field v-model="location" label="enter a city"></v-text-field>
+                        </v-flex>
+                        <v-flex pa-1>
+                            <v-btn v-on:click="changeCity($event)">Get Current Weather</v-btn>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-flex>
+            <v-flex pa-6 v-else-if="this.searchType === 'Forecast'">
+                <v-card>
+                    <v-layout row>
+                        <v-flex pa-1>
+                            <v-text-field v-model="location" label="enter a city"></v-text-field>
+                        </v-flex>
+                        <v-flex pa-1>
+                            <v-btn v-on:click="changeCity($event)">Get 16 day weather forecast</v-btn>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex pa-6 v-if="this.searchType === 'Current'">
+                <v-card>
+                    <v-jumbotron v-for="weather in currentWeather">
+                        <v-layout row>
+                            <v-flex pa-3>
+                    <h3>Temperature: {{ currentWeather[0].temp }}C</h3>
+                </v-flex>
+                <v-flex pa-3>
+                    <h3>Wind Speed: {{currentWeather[0].wind_spd}}MPH</h3>
+                </v-flex>
+                </v-layout>
+                </v-jumbotron>
+                </v-card>
+            </v-flex>
+            <v-flex pa-6 v-else-if="this.searchType === 'Forecast'">
+                <v-layout row>
+                    <v-expansion-panel expand flat class="transparent elevation-0 vuse-expansion">
+                        <v-flex pa-1 v-for="weather in forecastArray">
+                            <v-card>
+                                <v-card-title primary-title>
+                                    <h3>{{ searchedLocation }} : {{weather.datetime}}</h3>
+                                </v-card-title>
+                                <v-card-text>
+                                    <p>Temp: {{weather.temp}}</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-flex>
+                    </v-expansion-panel>
+
+                </v-layout>
+            </v-flex>
+            </v-card>
+        </v-layout>
+    </v-container>
+    <script src="VueScripts/weather.js"></script>
+    <!-- <script src="VueScripts/forecastWeather.js"></script> -->
 
 </body>
 

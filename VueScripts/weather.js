@@ -4,13 +4,15 @@ new Vue({
   data: {
     info: null,
     temp: 0,
-    location: "Charlotte, NC",
-    searchedLocation: "Charlotte, NC",
+    location: "Charlotte, US",
+    searchedLocation: "Charlotte, US",
     currentWeather: [],
     forecastArray: [],
     forecastLocation: "",
-    searchType: "Current"
+    searchOptions: ["Current", "Forecast"],
+    searchType: "Current",
   },
+  
   methods: {
     getCurrentWeather: function () {
       this.currentWeather = []
@@ -60,7 +62,8 @@ new Vue({
         this.getWeatherForecast()
     },
     onSearchChange(event) {
-      localStorage.setItem("searchType", event.target.value)
+      console.log(this.searchType)
+      //localStorage.setItem("searchType", event.target.value)
       if (this.searchType === "Current")
         this.getCurrentWeather()
       else (this.searchType === "Forecast")
