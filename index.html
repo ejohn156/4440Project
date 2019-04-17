@@ -20,13 +20,20 @@
     <div id="weather">
         <v-toolbar dark color="#1b5e20">
             <v-toolbar-title class="white--text">4440 Weather Forecaster</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-select v-model="searchType" box value="Current" v-on:change="onSearchChange" :items="searchOptions">
+            
+            <v-toolbar-items>
+            <v-select style="margin-left: 3%;"v-model="searchMethod" box value="City" v-on:change="onSearchMethodChange" :items="searchMethodOptions">
             </v-select>
-            <v-spacer></v-spacer>
-            <v-text-field v-model="location" label="enter a city"></v-text-field>
-            <v-spacer></v-spacer>
-            <v-btn v-on:click="changeCity($event)" style="background-color:gold;color:#1b5e20;"><b>Get Weather</b></v-btn>
+            
+            <div v-if="searchMethod != 'Voice Command'">
+                <v-text-field v-model="location" label="enter a location"></v-text-field>
+            </div>
+            <div v-if="searchMethod != 'Voice Command'">
+            <v-btn flat v-on:click="changeCity($event)" style="background-color:gold;color:#1b5e20;"><b>Get Weather</b></v-btn>
+            </div>
+            <div v-else-if="searchMethod == 'Voice Command'">
+            </div>
+        </v-toolbar-items>
         </v-toolbar>
         <v-container grid-list-x1>
 
@@ -43,9 +50,9 @@
                             <v-chip v-on:click="changeToForecast">Forecast</v-chip>
                         </div>
                         <div class="text-xs-center" v-if="this.searchType === 'Forecast'">
-                                <v-chip v-on:click="changeToCurrent">Current</v-chip>
-                                <v-chip v-on:click="changeToForecast" style="background-color:gold">Forecast</v-chip>
-                            </div>
+                            <v-chip v-on:click="changeToCurrent">Current</v-chip>
+                            <v-chip v-on:click="changeToForecast" style="background-color:gold">Forecast</v-chip>
+                        </div>
                     </v-flex>
                 </v-layout>
                 <!-- </v-card>

@@ -10,7 +10,9 @@ new Vue({
     forecastArray: [],
     forecastLocation: "",
     searchOptions: ["Current", "Forecast"],
+    searchMethodOptions: ["City", "Voice Command"],
     searchType: "Current",
+    searchMethod: "City"
   },
   
   methods: {
@@ -61,14 +63,10 @@ new Vue({
       else if (localStorage.getItem("searchType") === "Forecast")
         this.getWeatherForecast()
     },
-    onSearchChange(event) {
-      console.log(this.searchType)
-      console.log(event.target.value)
+    onSearchMethodChange(event) {
+      console.log(this.searchMethod)
       //localStorage.setItem("searchType", event.target.value)
-      if (this.searchType === "Current")
-        this.getCurrentWeather()
-      else (this.searchType === "Forecast")
-      this.getWeatherForecast()
+      
 
     },
     changeToCurrent(){
@@ -93,9 +91,13 @@ new Vue({
       localStorage.location = newLocation;
       this.location = newLocation
     },
+    searchMethod(newSearchMethod){
+      localStorage.searchMethod = newSearchMethod
+      this.searchMethodType = newSearchMethod
+    },
     searchType(newSearchType){
       localStorage.searchType = newSearchType
-      this.searchType = newSearchType
+      this.searchMethodType = newSearchType
     },
     // forecastArray(newForecastArray){
     //   this.forecastArray = []
