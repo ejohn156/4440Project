@@ -1,4 +1,5 @@
 var currentWeatherAPI = 'https://api.weatherbit.io/v2.0/current?city=Charlotte,NC&key=817a04bb05af4998ba8982692cc8a5ef'
+
 new Vue({
   el: '#weather',
   data: {
@@ -10,7 +11,7 @@ new Vue({
     forecastArray: [],
     forecastLocation: "",
     searchOptions: ["Current", "Forecast"],
-    searchMethodOptions: ["City", "Voice Command"],
+    searchMethodOptions: ["City"],
     searchType: "Current",
     searchMethod: "City"
   },

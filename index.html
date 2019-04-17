@@ -18,6 +18,10 @@
 
 
 <body>
+        <div id="lex" class="white-circle" style="position: fixed">
+                <img   style="margin-left: 3%" v-on:click="clicked" src="https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/example/lex.png?raw=true">
+                    <canvas class="visualizer"></canvas>
+            </div>
     <div id="weather">
         <!-- tool bar -->
         <v-toolbar fixed dark color="#1b5e20">
@@ -28,15 +32,15 @@
                     v-on:change="onSearchMethodChange" :items="searchMethodOptions">
                 </v-select>
 
-                <div v-if="searchMethod != 'Voice Command'">
-                    <v-text-field style="margin-left: 3%;margin-right: 3%" v-model="location" label="enter a location"></v-text-field>
+                <div v-if="searchMethod == 'City'">
+                    <v-text-field style="margin-left: 3%;margin-right: 3%" v-model="location" label="Enter A City"></v-text-field>
                 </div>
-                <div v-if="searchMethod != 'Voice Command'">
+                <div>
                     <v-btn flat style="margin-left: 3%;margin-right: 3%;background-color:gold;color:#1b5e20;"
                         v-on:click="changeCity($event)"><b>Get Weather</b></v-btn>
                 </div>
                 <div v-else-if="searchMethod == 'Voice Command'" id="lex" class="white-circle">
-                    <img v-on:click="clicked" src="https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/example/lex.png?raw=true">
+                    <img  id="audio-control"src="https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/example/lex.png?raw=true">
                     <canvas class="visualizer"></canvas>
                 </div>
             </v-toolbar-items>
