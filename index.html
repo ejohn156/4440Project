@@ -35,8 +35,8 @@
                     <v-btn flat style="margin-left: 3%;margin-right: 3%;background-color:gold;color:#1b5e20;"
                         v-on:click="changeCity($event)"><b>Get Weather</b></v-btn>
                 </div>
-                <div v-else-if="searchMethod == 'Voice Command'" id="audio-control" class="white-circle">
-                    <img src="https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/example/lex.png?raw=true">
+                <div v-else-if="searchMethod == 'Voice Command'" id="lex" class="white-circle">
+                    <img v-on:click="clicked" src="https://github.com/awslabs/aws-lex-browser-audio-capture/blob/master/example/lex.png?raw=true">
                     <canvas class="visualizer"></canvas>
                 </div>
             </v-toolbar-items>
@@ -118,6 +118,7 @@
     </div>
     <script src="VueScripts/weather.js"></script>
     <script src="VueScripts/p5.js"></script>
+    <script src="VueScripts/lex.js"></script>
 </body>
 
 </html>
