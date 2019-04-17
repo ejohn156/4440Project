@@ -17,9 +17,9 @@ new Vue({
     getCurrentWeather: function () {
       this.currentWeather = []
       var currentWeatherAPI = 'https://api.weatherbit.io/v2.0/current?city=' + localStorage.getItem("location") + '&key=817a04bb05af4998ba8982692cc8a5ef'
-      console.log("current")
+      //console.log("current")
       this.$http.get(currentWeatherAPI).then((response) => {
-        console.log(response.data.data[0])
+        //console.log(response.data.data[0])
         this.temp = response.data.data[0].temp
         this.currentWeather.push(response.data.data[0])
       })
@@ -41,14 +41,14 @@ new Vue({
     },
     getWeatherForecast: function () {
       this.forecastArray = []
-      console.log("forecast")
+      //console.log("forecast")
       this.forecastLocation = localStorage.getItem("location")
       var forecastWeatherAPI = 'https://api.weatherbit.io/v2.0/forecast/daily?city=' + this.forecastLocation + '&key=817a04bb05af4998ba8982692cc8a5ef'
       this.$http.get(forecastWeatherAPI).then((response) => {
         var forecastData = response.data.data
         this.location = localStorage.getItem("location")
         forecastData.map((weather) => {
-          console.log(weather)
+          //console.log(weather)
 
           this.forecastArray.push(weather);
         });
@@ -63,12 +63,23 @@ new Vue({
     },
     onSearchChange(event) {
       console.log(this.searchType)
+      console.log(event.target.value)
       //localStorage.setItem("searchType", event.target.value)
       if (this.searchType === "Current")
         this.getCurrentWeather()
       else (this.searchType === "Forecast")
       this.getWeatherForecast()
 
+    },
+    changeToCurrent(){
+      this.searchType = "Current"
+      localStorage.setItem("searchType", "Current")
+      this.getCurrentWeather()
+    },
+    changeToForecast(){
+      this.searchType = "Forecast"
+      localStorage.setItem("searchType", "Forecast")
+      this.getWeatherForecast()
     }
   },
 
