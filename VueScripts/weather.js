@@ -16,6 +16,7 @@ new Vue({
   },
   
   methods: {
+    
     getCurrentWeather: function () {
       this.currentWeather = []
       var currentWeatherAPI = 'https://api.weatherbit.io/v2.0/current?city=' + localStorage.getItem("location") + '&key=817a04bb05af4998ba8982692cc8a5ef'
