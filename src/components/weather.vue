@@ -18,7 +18,8 @@
                 </div>
             </v-toolbar-items>
         </v-toolbar>
-        <v-container grid-list-x1 style="margin-top: 5%">
+</div>
+        <!-- <v-container grid-list-x1 style="margin-top: 5%">
 
 
             <v-card style="background-color:#1b5e20;">
@@ -73,18 +74,18 @@
                         </v-layout>
 
                     </v-flex>
+                </v-layout>
             </v-card>
-            <!-- </v-layout> -->
-            <!-- </v-card> -->
-        </v-container>
-        <!-- </v-container> -->
-        <div>
+        </v-container> -->
+
+        <!-- <div> -->
 </template>
 
 <script>
 export default {
   name: '#weather',
-  data: {
+  data: function()  {
+    return{
     info: null,
     temp: 0,
     location: "Charlotte, US",
@@ -96,7 +97,7 @@ export default {
     searchMethodOptions: ["City"],
     searchType: "Current",
     searchMethod: "City"
-  },
+    }},
   
   methods: {
     
@@ -147,12 +148,12 @@ export default {
       else if (localStorage.getItem("searchType") === "Forecast")
         this.getWeatherForecast()
     },
-    onSearchMethodChange(event) {
-      console.log(this.searchMethod)
-      //localStorage.setItem("searchType", event.target.value)
+    // onSearchMethodChange(event) {
+    //   //console.log(this.searchMethod)
+    //   //localStorage.setItem("searchType", event.target.value)
       
 
-    },
+    // },
     changeToCurrent(){
       this.searchType = "Current"
       localStorage.setItem("searchType", "Current")
