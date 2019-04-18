@@ -1,6 +1,6 @@
 
 <template>
-<div id="weather">
+<div>
   <v-toolbar fixed dark color="#1b5e20">
             <v-toolbar-title class="white--text">4440 Weather Forecaster</v-toolbar-title>
 
@@ -12,14 +12,17 @@
                 <div v-if="searchMethod == 'City'">
                     <v-text-field style="margin-left: 3%;margin-right: 3%" v-model="location" label="Enter A City"></v-text-field>
                 </div>
-                <div>
+                <div v-if="searchMethod == 'City'">
                     <v-btn flat style="margin-left: 3%;margin-right: 3%;background-color:gold;color:#1b5e20;"
                         v-on:click="changeCity($event)"><b>Get Weather</b></v-btn>
                 </div>
+                <div v-if="searchMethod == 'Voice'">
+                      <lex/>
+                </div>
             </v-toolbar-items>
         </v-toolbar>
-</div>
-        <!-- <v-container grid-list-x1 style="margin-top: 5%">
+
+        <v-container grid-list-x1 style="margin-top: 5%">
 
 
             <v-card style="background-color:#1b5e20;">
@@ -45,7 +48,7 @@
                 <v-layout row>
                     <v-flex pa-6 v-if="this.searchType === 'Current'">
                         <v-card>
-                            <v-jumbotron v-for="weather in currentWeather" v-bind:key="weather">
+                            <v-jumbotron v-for="weather in currentWeather" v-bind:key="weather.datetime">
                                 <v-layout row>
                                     <v-flex pa-3>
                                         <h3>Temperature: {{ currentWeather[0].temp }}C</h3>
@@ -60,7 +63,7 @@
                     <v-flex pa-6 v-else-if="this.searchType === 'Forecast'">
                         <v-layout row>
                             <v-expansion-panel expand flat class="transparent elevation-0 vuse-expansion">
-                                <v-flex pa-1 v-for="weather in forecastArray" v-bind:key="weather">
+                                <v-flex pa-1 v-for="weather in forecastArray" v-bind:key="weather.datetime">
                                     <v-card>
                                         <v-card-title primary-title>
                                             <h3>{{ searchedLocation }} : {{weather.datetime}}</h3>
@@ -76,14 +79,23 @@
                     </v-flex>
                 </v-layout>
             </v-card>
-        </v-container> -->
+        </v-container>
+      <sim v-bind:currentWeather="this.currentWeather" v-bind:forecastArray="this.forecastArray"/>  
+</div>
 
-        <!-- <div> -->
+
 </template>
 
 <script>
+import lex from "./lex"
+import axios from "axios"
+import sim from './p5'
 export default {
-  name: '#weather',
+  name: 'weather',
+  components :{
+    sim,
+    lex
+  },
   data: function()  {
     return{
     info: null,
@@ -94,18 +106,17 @@ export default {
     forecastArray: [],
     forecastLocation: "",
     searchOptions: ["Current", "Forecast"],
-    searchMethodOptions: ["City"],
+    searchMethodOptions: ["City", "Voice"],
     searchType: "Current",
     searchMethod: "City"
     }},
-  
   methods: {
     
     getCurrentWeather: function () {
       this.currentWeather = []
       var currentWeatherAPI = 'https://api.weatherbit.io/v2.0/current?city=' + localStorage.getItem("location") + '&key=817a04bb05af4998ba8982692cc8a5ef'
       //console.log("current")
-      this.$http.get(currentWeatherAPI).then((response) => {
+      axios.get(currentWeatherAPI).then((response) => {
         //console.log(response.data.data[0])
         this.temp = response.data.data[0].temp
         this.currentWeather.push(response.data.data[0])
@@ -114,7 +125,7 @@ export default {
     changeCity: function () {
       var currentWeatherAPI = 'https://api.weatherbit.io/v2.0/current?city=' + this.location + '&key=817a04bb05af4998ba8982692cc8a5ef'
       
-      this.$http.get(currentWeatherAPI).then((response) => {
+      axios.get(currentWeatherAPI).then((response) => {
         localStorage.setItem("location",response.data.data[0].city_name + ", " + response.data.data[0].country_code)
         this.location = localStorage.getItem("location")
         this.searchedLocation = this.location
@@ -131,7 +142,7 @@ export default {
       //console.log("forecast")
       this.forecastLocation = localStorage.getItem("location")
       var forecastWeatherAPI = 'https://api.weatherbit.io/v2.0/forecast/daily?city=' + this.forecastLocation + '&key=817a04bb05af4998ba8982692cc8a5ef'
-      this.$http.get(forecastWeatherAPI).then((response) => {
+      axios.get(forecastWeatherAPI).then((response) => {
         var forecastData = response.data.data
         this.location = localStorage.getItem("location")
         forecastData.map((weather) => {
@@ -148,12 +159,12 @@ export default {
       else if (localStorage.getItem("searchType") === "Forecast")
         this.getWeatherForecast()
     },
-    // onSearchMethodChange(event) {
-    //   //console.log(this.searchMethod)
-    //   //localStorage.setItem("searchType", event.target.value)
+    onSearchMethodChange() {
+      //console.log(this.searchMethod)
+      //localStorage.setItem("searchType", event.target.value)
       
 
-    // },
+    },
     changeToCurrent(){
       this.searchType = "Current"
       localStorage.setItem("searchType", "Current")
